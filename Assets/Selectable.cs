@@ -16,26 +16,45 @@ public class Selectable : MonoBehaviour
         set
         {
             _isSelected = value;
-            _outline.enabled = value;
+            if (_outline)
+            {
+                _outline.enabled = value;
+            }
+            
         }
     }
 
     private NavMeshAgent _agent;
     private Outline _outline;
+    private Animator _animator;
+    private static readonly int Running = Animator.StringToHash("running");
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
+        _animator = GetComponent<Animator> ();
         _outline = GetComponent<Outline>();
-        _outline.enabled = false;
-        _outline.color = 1; // Green
+        if (_outline)
+        {
+            _outline.enabled = false;
+            _outline.color = 1; // Green
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (_animator != null)
+        {
+            AnimationUpdate();
+        }
+    }
+
+    private void AnimationUpdate()
+    {
+        _animator.SetBool(Running, _agent.velocity.magnitude > 0f);
     }
 
     public void SetDestination(Vector3 destination)
