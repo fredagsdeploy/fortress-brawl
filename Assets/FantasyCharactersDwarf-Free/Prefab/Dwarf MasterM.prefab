@@ -965,7 +965,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -1026,6 +1026,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4060378552748470}
   - component: {fileID: 137886124839467748}
+  - component: {fileID: 6772306492565004176}
   m_Layer: 0
   m_Name: Master Dwarf
   m_TagString: Untagged
@@ -1198,6 +1199,22 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.00008568284, y: -0.00015716173, z: -0.0065631}
     m_Extent: {x: 0.004261723, y: 0.0030479203, z: 0.0073737176}
   m_DirtyAABB: 0
+--- !u!114 &6772306492565004176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217975970704510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 1
+  eraseRenderer: 0
+  originalLayer: 0
+  originalMaterials: []
 --- !u!1 &1227479736487608
 GameObject:
   m_ObjectHideFlags: 0
