@@ -14,6 +14,7 @@ public class CameraManager : MonoBehaviour
     private float _maxHeight = 100f;
     private bool _cursorLocked = false;
     private Camera _camera;
+    private float _panDetect = 15f;
 
     // Start is called before the first frame update
     void Start()
@@ -82,27 +83,28 @@ public class CameraManager : MonoBehaviour
     {
         var delta = Time.deltaTime;
         var currentPanSpeed = delta * horizontalPanSpeed;
-        float moveX = _camera.transform.position.x;
-        float moveZ = _camera.transform.position.z;
-        float moveY = _camera.transform.position.y;
+        var position = _camera.transform.position;
+        float moveX = position.x;
+        float moveZ = position.z;
+        float moveY = position.y;
 
         float mouseX = Input.mousePosition.x;
         float mouseY = Input.mousePosition.y;
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) || mouseX > 0 && mouseX < _panDetect)
         {
             moveX -= currentPanSpeed;
         }
-        else if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D) || mouseX < Screen.width && mouseX > Screen.width - _panDetect)
         {
             moveX += currentPanSpeed;
         }
 
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W) || mouseY < Screen.height && mouseY > Screen.height - _panDetect)
         {
             moveZ += currentPanSpeed;
         }
-        else if (Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.S) || mouseY > 0 && mouseY < _panDetect)
         {
             moveZ -= currentPanSpeed;
         }
