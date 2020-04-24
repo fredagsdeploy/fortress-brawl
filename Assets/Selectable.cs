@@ -9,8 +9,8 @@ public class Selectable : MonoBehaviour
 
     public string name;
 
-    private bool _isSelected = false;
-    public bool isSelected
+    private bool _isSelected;
+    public bool IsSelected
     {
         get => _isSelected;
         set
@@ -28,13 +28,15 @@ public class Selectable : MonoBehaviour
     private Outline _outline;
     private Animator _animator;
     private static readonly int Running = Animator.StringToHash("running");
+    private bool _isAnimatorNotNull;
 
     // Start is called before the first frame update
     void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator> ();
-        _outline = GetComponent<Outline>();
+        _isAnimatorNotNull = _animator != null;
+        _outline = GetComponentInChildren<Outline>();
         if (_outline)
         {
             _outline.enabled = false;
@@ -46,7 +48,7 @@ public class Selectable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_animator != null)
+        if (_isAnimatorNotNull)
         {
             AnimationUpdate();
         }

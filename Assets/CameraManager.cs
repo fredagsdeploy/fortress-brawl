@@ -13,11 +13,13 @@ public class CameraManager : MonoBehaviour
     private float _minHeight = 10f;
     private float _maxHeight = 100f;
     private bool _cursorLocked = false;
-    
+    private Camera _camera;
+
     // Start is called before the first frame update
     void Start()
     {
-        _rotation = Camera.main.transform.rotation;
+        _camera = Camera.main;
+        _rotation = _camera.transform.rotation;
     }
 
     // Update is called once per frame
@@ -28,13 +30,13 @@ public class CameraManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Camera.main.transform.rotation = _rotation;
+            _camera.transform.rotation = _rotation;
         }
     }
     
     private void RotateCamera()
     {
-        Vector3 origin = Camera.main.transform.eulerAngles;
+        Vector3 origin = _camera.transform.eulerAngles;
         Vector3 destination = origin;
         if (Input.GetMouseButton((int) MouseButton.MiddleMouse))
         {
@@ -72,7 +74,7 @@ public class CameraManager : MonoBehaviour
 
         if (destination != origin)
         {
-            Camera.main.transform.eulerAngles = Vector3.MoveTowards(origin, destination, Time.deltaTime * rotateSpeed);
+            _camera.transform.eulerAngles = Vector3.MoveTowards(origin, destination, Time.deltaTime * rotateSpeed);
         }
     }
 
@@ -80,10 +82,9 @@ public class CameraManager : MonoBehaviour
     {
         var delta = Time.deltaTime;
         var currentPanSpeed = delta * horizontalPanSpeed;
-        Camera camera = Camera.main;
-        float moveX = camera.transform.position.x;
-        float moveZ = camera.transform.position.z;
-        float moveY = camera.transform.position.y;
+        float moveX = _camera.transform.position.x;
+        float moveZ = _camera.transform.position.z;
+        float moveY = _camera.transform.position.y;
 
         float mouseX = Input.mousePosition.x;
         float mouseY = Input.mousePosition.y;
@@ -109,6 +110,6 @@ public class CameraManager : MonoBehaviour
         moveY -= Input.GetAxis("Mouse ScrollWheel") * currentPanSpeed * verticalPanSpeed;
         moveY = Mathf.Clamp(moveY, _minHeight, _maxHeight);
         Vector3 newPos = new Vector3(moveX, moveY, moveZ);
-        camera.transform.position = newPos;
+        _camera.transform.position = newPos;
     }
 }

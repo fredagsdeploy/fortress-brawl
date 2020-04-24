@@ -14,10 +14,16 @@ public class SelectionManager : MonoBehaviour
     public Image selectionBox;
     
     
-    private Vector3 startScreenPos;
-    private BoxCollider worldCollider;
-    private RectTransform rt;
-    private bool isSelecting;
+    private Vector3 _startScreenPos;
+    private BoxCollider _worldCollider;
+    private RectTransform _rt;
+    private bool _isSelecting;
+    private Camera _camera;
+
+    private void Awake()
+    {
+        _camera = Camera.main;
+    }
 
     private void Start()
     {
@@ -27,10 +33,10 @@ public class SelectionManager : MonoBehaviour
         if (selectionBox != null)
         {
             //We need to reset anchors and pivot to ensure proper positioning
-            rt = selectionBox.GetComponent<RectTransform>();
-            rt.pivot = Vector2.one * .5f;
-            rt.anchorMin = Vector2.one * .5f;
-            rt.anchorMax = Vector2.one * .5f;
+            _rt = selectionBox.GetComponent<RectTransform>();
+            _rt.pivot = Vector2.one * .5f;
+            _rt.anchorMin = Vector2.one * .5f;
+            _rt.anchorMax = Vector2.one * .5f;
             selectionBox.gameObject.SetActive(false);
         }
     }
@@ -57,22 +63,22 @@ public class SelectionManager : MonoBehaviour
 
     private void UpdateSelectionBox()
     {
-        selectionBox.gameObject.SetActive(isSelecting);
-        if (isSelecting)
+        selectionBox.gameObject.SetActive(_isSelecting);
+        if (_isSelecting)
         {
             Bounds b = new Bounds
             {
-                center = Vector3.Lerp(startScreenPos, Input.mousePosition, 0.5f),
-                size = new Vector3(Mathf.Abs(startScreenPos.x - Input.mousePosition.x),
-                    Mathf.Abs(startScreenPos.y - Input.mousePosition.y),
+                center = Vector3.Lerp(_startScreenPos, Input.mousePosition, 0.5f),
+                size = new Vector3(Mathf.Abs(_startScreenPos.x - Input.mousePosition.x),
+                    Mathf.Abs(_startScreenPos.y - Input.mousePosition.y),
                     0)
             };
             //The center of the bounds is inbetween startpos and current pos
             //We make the size absolute (negative bounds don't contain anything)
 
             //To display our selectionbox image in the same place as our bounds
-            rt.position = b.center;
-            rt.sizeDelta = canvas.transform.InverseTransformVector(b.size);
+            _rt.position = b.center;
+            _rt.sizeDelta = canvas.transform.InverseTransformVector(b.size);
             
 
 
@@ -80,9 +86,9 @@ public class SelectionManager : MonoBehaviour
             foreach (Selectable selectable in selectables)
             {
                 //If the screenPosition of the worldobject is within our selection bounds, we can add it to our selection
-                Vector3 screenPos = Camera.main.WorldToScreenPoint(selectable.transform.position);
+                Vector3 screenPos = _camera.WorldToScreenPoint(selectable.transform.position);
                 screenPos.z = 0;
-                selectable.isSelected = b.Contains(screenPos);
+                selectable.IsSelected = b.Contains(screenPos);
             }
         }
     }
@@ -90,27 +96,26 @@ public class SelectionManager : MonoBehaviour
     private void LeftMouseDown()
     {
         //Storing these variables for the selectionBox
-        startScreenPos = Input.mousePosition;
-        isSelecting = true;
+        _startScreenPos = Input.mousePosition;
+        _isSelecting = true;
     }
 
     private void LeftMouseUp()
     {
-        isSelecting = false;
+        _isSelecting = false;
     }
 
     private void RightMouse()
     {
-        Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray r = _camera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(r, out hit))
         {
-            var tag = hit.collider.tag;
-            if (tag == "Ground")
+            if (hit.collider.CompareTag("Ground"))
             {
                 foreach (var selectable in selectables)
                 {
-                    if (selectable.isSelected)
+                    if (selectable.IsSelected)
                     {
                         selectable.SetDestination(hit.point);
                     }
