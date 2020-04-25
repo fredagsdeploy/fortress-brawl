@@ -5,24 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject unit;
-    public float spawnRate = 1f;
-    public Vector3 destination;
+    private GameObject _unit;
+    private float _spawnRate = 1f;
+    private Vector3 _destination;
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating(nameof(Spawn), 0f, spawnRate);
+        var config = GetComponentInParent<SpawnConfiguration>();
+        _unit = config.unit;
+        _destination = config.destination;
+        _spawnRate = config.spawnRate;
+        InvokeRepeating(nameof(Spawn), 0f, _spawnRate);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
     void Spawn()
     {
-        var spawned = Instantiate(unit, transform.position + new Vector3(10, 0, 10), transform.rotation);
-        spawned.GetComponent<Selectable>().SetDestination(destination);
+        var spawned = Instantiate(_unit, transform.position + new Vector3(10, 0, 10), transform.rotation);
+        spawned.GetComponent<Movable>().SetDestination(_destination);
     }
 }

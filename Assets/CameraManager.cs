@@ -51,18 +51,7 @@ public class CameraManager : MonoBehaviour
             destination.x = Mathf.Clamp(x, 0, 80);
 
             var yOrig = destination.y + Input.GetAxis("Mouse X") * rotateFactor;
-            if (yOrig < 270 && yOrig > 260)
-            {
-                destination.y = 270;
-            }
-            else if (yOrig > 90 && yOrig < 100)
-            {
-                destination.y = 90;
-            }
-            else
-            {
-                destination.y = yOrig;
-            }
+            destination.y = ClampCameraY(yOrig);
         }
         else
         {
@@ -77,6 +66,20 @@ public class CameraManager : MonoBehaviour
         {
             _camera.transform.eulerAngles = Vector3.MoveTowards(origin, destination, Time.deltaTime * rotateSpeed);
         }
+    }
+
+    private static float ClampCameraY(float y)
+    {
+        if (y < 270 && y > 260)
+        {
+            return 270;
+        }
+        
+        if (y > 90 && y < 100)
+        {
+            return 90;
+        }
+        return y;
     }
 
     private void MoveCamera()

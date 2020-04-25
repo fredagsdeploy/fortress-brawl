@@ -44,16 +44,20 @@ public class SelectionManager : MonoBehaviour
 
     private void Update()
     {
+        var shouldUpdateSelectionBox = true;
         if (Input.GetMouseButtonDown((int) MouseButton.LeftMouse))
         {
-            LeftMouseDown();
+             shouldUpdateSelectionBox = LeftMouseDown();
         } 
         else if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
         {
             LeftMouseUp();
         }
 
-        UpdateSelectionBox();
+        if (shouldUpdateSelectionBox)
+        {
+            UpdateSelectionBox();
+        }
         
         if (Input.GetMouseButton((int) MouseButton.RightMouse))
         {
@@ -93,11 +97,28 @@ public class SelectionManager : MonoBehaviour
         }
     }
 
-    private void LeftMouseDown()
+    private bool LeftMouseDown()
     {
+        
+        Ray mouseToWorldRay = _camera.ScreenPointToRay(Input.mousePosition);
+        //Shoots a ray into the 3D world starting at our mouseposition
+        if (Physics.Raycast(mouseToWorldRay, out var hitInfo))
+        {
+            //We check if we clicked on an object with a Selectable component
+            Selectable selectable = hitInfo.collider.GetComponentInParent<Selectable>();
+            if (selectable)
+            {
+                selectables.ForEach(s => s.IsSelected = false);
+                selectable.IsSelected = true;
+                //If we clicked on a Selectable, we don’t want to enable our SelectionBox
+                return false;
+            }
+        }
+        
         //Storing these variables for the selectionBox
         _startScreenPos = Input.mousePosition;
         _isSelecting = true;
+        return true;
     }
 
     private void LeftMouseUp()
@@ -108,17 +129,13 @@ public class SelectionManager : MonoBehaviour
     private void RightMouse()
     {
         Ray r = _camera.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(r, out hit))
+        if (Physics.Raycast(r, out var hit))
         {
             if (hit.collider.CompareTag("Ground"))
             {
-                foreach (var selectable in selectables)
+                foreach (var selectable in selectables.Where(selectable => selectable.IsSelected))
                 {
-                    if (selectable.IsSelected)
-                    {
-                        selectable.SetDestination(hit.point);
-                    }
+                    selectable.SendMessage(nameof(IMovable.SetDestination), hit.point, SendMessageOptions.DontRequireReceiver);
                 }
             }
         }
