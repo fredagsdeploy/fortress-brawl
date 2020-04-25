@@ -6,6 +6,8 @@ using Image = UnityEngine.UI.Image;
 
 public class SelectionManager : MonoBehaviour
 {
+    public float bottomUiHeight = 200;
+    public float bottomUiWidth = 1200;
     public static List<Selectable> selectables = new List<Selectable>();
     
     [Tooltip("Canvas is set automatically if not set in the inspector")]
@@ -102,6 +104,15 @@ public class SelectionManager : MonoBehaviour
 
     private bool LeftMouseDown()
     {
+        float mouseX = Input.mousePosition.x;
+        float center = (float) Screen.width / 2;
+        float leftUi = center - bottomUiWidth / 2;
+        float rightUi = center + bottomUiWidth / 2;
+        float mouseY = Input.mousePosition.y;
+        if (mouseY < bottomUiHeight && mouseX > leftUi && mouseX < rightUi)
+        {
+            return false;
+        }
         
         Ray mouseToWorldRay = _camera.ScreenPointToRay(Input.mousePosition);
         //Shoots a ray into the 3D world starting at our mouseposition

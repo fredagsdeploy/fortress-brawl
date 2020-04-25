@@ -11,5 +11,7 @@ public class EntityInfo : MonoBehaviour
 
     public float mana;
     public float maxMana;
-    
+
+    public bool canConstruct;
+
 }

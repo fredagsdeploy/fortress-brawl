@@ -11,12 +11,16 @@ using Button = UnityEngine.UI.Button;
 
 public class BottomUiController : MonoBehaviour
 {
+
+    public ActionButtonsController actionButtonsController;
     public Text unitSelectionText;
     public ValueBar unitHealthBar;
     public ValueBar unitManaBar;
     public GameObject unitPortrait;
+
     [CanBeNull] private Camera _singleSelectionCamera;
     [CanBeNull] private GameObject _singleSelection;
+    
 
     private void Awake()
     {
@@ -48,12 +52,14 @@ public class BottomUiController : MonoBehaviour
     {
         unitSelectionText.enabled = false;
         unitPortrait.SetActive(false);
+        actionButtonsController.ConstructionUnitDeselected();
     }
 
     private void UpdateUnitInfo(List<Selectable> selected)
     {
         unitSelectionText.enabled = true;
         unitSelectionText.text = selected.Count().ToString();
+        actionButtonsController.ConstructionUnitDeselected();
     }
 
     private void UpdateUnitInfo(Selectable selected)
@@ -66,6 +72,11 @@ public class BottomUiController : MonoBehaviour
         _singleSelectionCamera = _singleSelection.GetComponentInChildren<Camera>();
         unitHealthBar.SetValue(entityInfo.health, entityInfo.maxHealth);
         unitManaBar.SetValue(entityInfo.mana, entityInfo.maxMana);
+
+        if (entityInfo.canConstruct)
+        {
+            actionButtonsController.ConstructionUnitSelected();
+        }
         
         if (_singleSelectionCamera)
         {

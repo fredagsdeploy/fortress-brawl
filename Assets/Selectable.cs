@@ -7,7 +7,7 @@ using UnityEngine;
 public class Selectable : MonoBehaviour
 {
     private Outline _outline;
-    private bool _isSelected;
+    private bool _isSelected = false;
 
     public bool IsSelected
     {
@@ -33,8 +33,9 @@ public class Selectable : MonoBehaviour
         _outline = GetComponentInChildren<Outline>();
         if (_outline)
         {
-            _outline.enabled = false;
             _outline.color = 1; // Green
+            _outline.enabled = false;
+            
         }
     }
     
@@ -46,17 +47,5 @@ public class Selectable : MonoBehaviour
     void OnDisable()
     {
         SelectionManager.selectables.Remove(this);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

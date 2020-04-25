@@ -100,6 +100,7 @@ MonoBehaviour:
   maxHealth: 100
   mana: 0
   maxMana: 0
+  canConstruct: 0
 --- !u!136 &3804457552682425761
 CapsuleCollider:
   m_ObjectHideFlags: 0
