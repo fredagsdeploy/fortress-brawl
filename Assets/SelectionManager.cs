@@ -19,16 +19,17 @@ public class SelectionManager : MonoBehaviour
     private RectTransform _rt;
     private bool _isSelecting;
     private Camera _camera;
+    private BottomUiController _bottomUiController;
 
     private void Awake()
     {
         _camera = Camera.main;
+        _bottomUiController = canvas.GetComponentInChildren<BottomUiController>();
     }
 
     private void Start()
     {
-        if (canvas == null)
-            canvas = FindObjectOfType<Canvas>();
+        
  
         if (selectionBox != null)
         {
@@ -94,6 +95,8 @@ public class SelectionManager : MonoBehaviour
                 screenPos.z = 0;
                 selectable.IsSelected = b.Contains(screenPos);
             }
+            
+            NotifySelectionUpdateToUI();
         }
     }
 
@@ -110,6 +113,7 @@ public class SelectionManager : MonoBehaviour
             {
                 selectables.ForEach(s => s.IsSelected = false);
                 selectable.IsSelected = true;
+                NotifySelectionUpdateToUI();
                 //If we clicked on a Selectable, we don’t want to enable our SelectionBox
                 return false;
             }
@@ -139,5 +143,13 @@ public class SelectionManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void NotifySelectionUpdateToUI()
+    {
+        _bottomUiController
+            .OnUpdatedSelection(
+                selectables.FindAll(s => s.IsSelected)
+            );
     }
 }

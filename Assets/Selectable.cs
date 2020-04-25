@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Selectable : MonoBehaviour
 {
+    public string entityName;
     private Outline _outline;
     private bool _isSelected;
 

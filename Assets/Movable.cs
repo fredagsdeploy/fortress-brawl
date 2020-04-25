@@ -6,8 +6,6 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Animator))]
 public class Movable : MonoBehaviour, ISelectable, IMovable
 {
-    public string name;
-    
     private NavMeshAgent _agent;
     private Animator _animator;
     public GameObject goalPost;
@@ -15,6 +13,8 @@ public class Movable : MonoBehaviour, ISelectable, IMovable
     private bool _isAnimatorNotNull;
     private Renderer _goalpostRenderer;
     private GameObject _clonedGoalPost;
+    private bool _moving = false;
+    private bool _selected = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -24,7 +24,8 @@ public class Movable : MonoBehaviour, ISelectable, IMovable
         SetupGoalPost();
 
     }
-
+    
+    
     private void SetupAnimator()
     {
         _animator = GetComponentInChildren<Animator>();
@@ -41,15 +42,22 @@ public class Movable : MonoBehaviour, ISelectable, IMovable
     // Update is called once per frame
     void Update()
     {
+        _moving = _agent.velocity.magnitude > 0f;
+        UpdateGoalPost();
         if (_isAnimatorNotNull)
         {
             AnimationUpdate();
         }
     }
 
+    private void UpdateGoalPost()
+    {
+        _goalpostRenderer.enabled = _moving && _selected;
+    }
+
     private void AnimationUpdate()
     {
-        _animator.SetBool(Running, _agent.velocity.magnitude > 0f);
+        _animator.SetBool(Running, _moving);
     }
 
     public void SetDestination(Vector3 destination)
@@ -60,6 +68,6 @@ public class Movable : MonoBehaviour, ISelectable, IMovable
 
     public void SelectionChanged(bool value)
     {
-        _goalpostRenderer.enabled = value;
+        _selected = value;
     }
 }
