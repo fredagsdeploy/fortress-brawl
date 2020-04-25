@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 4920679374403368485}
   - component: {fileID: 4920679374403368475}
   - component: {fileID: 1357585311033625355}
+  - component: {fileID: 4108750242033740381}
   m_Layer: 0
   m_Name: Worker2
   m_TagString: Untagged
@@ -112,7 +113,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23e505fbe7c86e040a49cee17e5927bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityName: Berserker Dwarf
+--- !u!114 &4108750242033740381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4920679374403368472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ca62a5eef981424e85df9503c3ad473, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entityName: Berseker Dwarf
+  health: 200
+  maxHealth: 200
+  mana: 50
+  maxMana: 50
 --- !u!1001 &1657922697839696117
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 572891746838371056}
   - component: {fileID: 572891746838371022}
   - component: {fileID: 4842007749394267768}
+  - component: {fileID: 6680044427745486970}
   m_Layer: 0
   m_Name: Worker
   m_TagString: Untagged
@@ -82,7 +83,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23e505fbe7c86e040a49cee17e5927bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6680044427745486970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 572891746838371021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ca62a5eef981424e85df9503c3ad473, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   entityName: Master Dwarf
+  health: 100
+  maxHealth: 100
+  mana: 0
+  maxMana: 0
 --- !u!136 &3804457552682425761
 CapsuleCollider:
   m_ObjectHideFlags: 0

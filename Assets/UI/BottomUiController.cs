@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
+using UI;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.UI;
@@ -11,6 +12,8 @@ using Button = UnityEngine.UI.Button;
 public class BottomUiController : MonoBehaviour
 {
     public Text unitSelectionText;
+    public ValueBar unitHealthBar;
+    public ValueBar unitManaBar;
     public GameObject unitPortrait;
     [CanBeNull] private Camera _singleSelectionCamera;
     [CanBeNull] private GameObject _singleSelection;
@@ -57,15 +60,20 @@ public class BottomUiController : MonoBehaviour
     {
         unitSelectionText.enabled = true;
         unitPortrait.SetActive(true);
-        unitSelectionText.text = selected.entityName;
+        var entityInfo = selected.GetComponent<EntityInfo>();
+        unitSelectionText.text = entityInfo.entityName;
         _singleSelection = selected.gameObject;
         _singleSelectionCamera = _singleSelection.GetComponentInChildren<Camera>();
+        unitHealthBar.SetValue(entityInfo.health, entityInfo.maxHealth);
+        unitManaBar.SetValue(entityInfo.mana, entityInfo.maxMana);
         
         if (_singleSelectionCamera)
         {
             _singleSelectionCamera.enabled = true;    
         }
     }
+
+
 
     public void PortraitClicked()
     {
