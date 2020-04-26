@@ -14,12 +14,16 @@ public class Selectable : MonoBehaviour
         get => _isSelected;
         set
         {
-            _isSelected = value;
-            if (_outline)
+            if (_isSelected != value)
             {
-                _outline.enabled = value;
+                _isSelected = value;
+                if (_outline)
+                {
+                    _outline.enabled = value;
+                }
+                SendMessage(nameof(ISelectable.SelectionChanged), value, SendMessageOptions.DontRequireReceiver);
             }
-            SendMessage(nameof(ISelectable.SelectionChanged), value, SendMessageOptions.DontRequireReceiver);
+
         }
     }
 

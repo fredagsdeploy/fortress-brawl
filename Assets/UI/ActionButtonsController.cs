@@ -9,20 +9,62 @@ public class ActionButtonsController : MonoBehaviour
 {
     
     public Button iconButton;
+    public Sprite cancelSprite;
+    public Sprite buildSprite;
     public ConstructionManager constructionManager;
-    public List<ConstructionInfo> constructionInfos;
     private List<Button> _buttons = new List<Button>();
+    private Race _constructionRace;
+    private bool _buildActionActive = false;
+
+    void Update()
+    {
+        if (_buildActionActive && Input.GetKeyDown(KeyCode.Escape))
+        {
+            BuildActionCancelled();
+        }
+    }
     
-    public void ConstructionUnitSelected()
+    public void BuildingSelected()
     {
         CleanupButtons();
-        constructionInfos.ForEach(info =>
+    }
+
+    public void BuildActionSelected()
+    {
+        _buildActionActive = true;
+        CleanupButtons();
+        _constructionRace.GetConstructionInfos().ForEach(info =>
         {
             var button = Instantiate(iconButton, transform);
             button.image.sprite = info.sprite;
             button.onClick.AddListener((() => constructionManager.StartPlacing(info)));
             _buttons.Add(button);
         });
+        var cancelButton = Instantiate(iconButton, transform);
+        cancelButton.image.sprite = cancelSprite;
+        cancelButton.onClick.AddListener(BuildActionCancelled);
+        _buttons.Add(cancelButton);
+    }
+
+    public void BuildActionCancelled()
+    {
+        _buildActionActive = false;
+        CleanupButtons();
+        SetupBuildAction();
+    }
+    
+    public void ConstructionUnitSelected(Race race)
+    {
+        _constructionRace = race;
+        SetupBuildAction();
+    }
+
+    private void SetupBuildAction()
+    {
+        var buildButton = Instantiate(iconButton, transform);
+        buildButton.image.sprite = buildSprite;
+        buildButton.onClick.AddListener(BuildActionSelected);
+        _buttons.Add(buildButton);
     }
 
     private void CleanupButtons()
@@ -35,8 +77,9 @@ public class ActionButtonsController : MonoBehaviour
         _buttons.Clear();
     }
 
-    public void ConstructionUnitDeselected()
+    public void ClearSelection()
     {
+        _constructionRace = null;
         CleanupButtons();
     }
 }

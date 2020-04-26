@@ -90,15 +90,26 @@ public class SelectionManager : MonoBehaviour
 
 
             //Looping through all the selectables in our world (automatically added/removed through the Selectable OnEnable/OnDisable)
+            bool changed = false;
             foreach (Selectable selectable in selectables)
             {
                 //If the screenPosition of the worldobject is within our selection bounds, we can add it to our selection
                 Vector3 screenPos = _camera.WorldToScreenPoint(selectable.transform.position);
                 screenPos.z = 0;
-                selectable.IsSelected = b.Contains(screenPos);
+                bool newValue = b.Contains(screenPos);
+                if (newValue != selectable.IsSelected)
+                {
+                    selectable.IsSelected = newValue;
+                    changed = true;
+                }
+                 
+            }
+
+            if (changed)
+            {
+                NotifySelectionUpdateToUI();
             }
             
-            NotifySelectionUpdateToUI();
         }
     }
 
@@ -122,9 +133,14 @@ public class SelectionManager : MonoBehaviour
             Selectable selectable = hitInfo.collider.GetComponentInParent<Selectable>();
             if (selectable)
             {
+                var current = selectable.IsSelected;
                 selectables.ForEach(s => s.IsSelected = false);
                 selectable.IsSelected = true;
-                NotifySelectionUpdateToUI();
+                if (!current)
+                {
+                    NotifySelectionUpdateToUI();
+                }
+                
                 //If we clicked on a Selectable, we don’t want to enable our SelectionBox
                 return false;
             }

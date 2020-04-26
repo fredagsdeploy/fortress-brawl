@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
+using Races;
 using UI;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -52,14 +53,14 @@ public class BottomUiController : MonoBehaviour
     {
         unitSelectionText.enabled = false;
         unitPortrait.SetActive(false);
-        actionButtonsController.ConstructionUnitDeselected();
+        actionButtonsController.ClearSelection();
     }
 
     private void UpdateUnitInfo(List<Selectable> selected)
     {
         unitSelectionText.enabled = true;
         unitSelectionText.text = selected.Count().ToString();
-        actionButtonsController.ConstructionUnitDeselected();
+        actionButtonsController.ClearSelection();
     }
 
     private void UpdateUnitInfo(Selectable selected)
@@ -75,7 +76,7 @@ public class BottomUiController : MonoBehaviour
 
         if (entityInfo.canConstruct)
         {
-            actionButtonsController.ConstructionUnitSelected();
+            actionButtonsController.ConstructionUnitSelected(entityInfo.race);
         }
         
         if (_singleSelectionCamera)

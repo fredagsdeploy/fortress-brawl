@@ -50,7 +50,7 @@ namespace UI
             _ghostBuildingManager = _ghostBuilding.GetComponentInChildren<GhostBuildingManager>();
         }
 
-        private void StopPlacing()
+        public void StopPlacing()
         {
             _isPlacing = false;
             _ghostBuildingRenderer = null;

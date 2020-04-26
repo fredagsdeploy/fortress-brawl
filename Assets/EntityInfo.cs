@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Races;
 using UnityEngine;
 
 public class EntityInfo : MonoBehaviour
@@ -14,4 +15,5 @@ public class EntityInfo : MonoBehaviour
 
     public bool canConstruct;
 
+    public Race race;
 }
