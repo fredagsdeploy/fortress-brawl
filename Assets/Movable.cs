@@ -1,6 +1,7 @@
 ﻿using cakeslice;
 using UnityEngine;
 using UnityEngine.AI;
+using Utils;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Animator))]
@@ -15,6 +16,7 @@ public class Movable : MonoBehaviour, ISelectable, IMovable
     private GameObject _clonedGoalPost;
     private bool _moving = false;
     private bool _selected = false;
+    private Transform _parent;
 
     // Start is called before the first frame update
     void Awake()
@@ -34,7 +36,7 @@ public class Movable : MonoBehaviour, ISelectable, IMovable
 
     private void SetupGoalPost()
     {
-        _clonedGoalPost = Instantiate(goalPost, transform.position, Quaternion.identity);
+        _clonedGoalPost = Instantiate(goalPost, transform.position, Quaternion.identity, DynamicObjectsUtil.DynamicRoot);
         _goalpostRenderer = _clonedGoalPost.GetComponent<Renderer>();
         _goalpostRenderer.enabled = false;
     }

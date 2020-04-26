@@ -7,7 +7,7 @@ namespace Races
     public abstract class Race: MonoBehaviour
     {
         
-        public abstract string getName();
+        public abstract string Name { get; }
         public abstract List<ConstructionInfo> GetConstructionInfos();
     }
 }

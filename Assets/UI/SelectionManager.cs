@@ -115,16 +115,27 @@ public class SelectionManager : MonoBehaviour
 
     private bool LeftMouseDown()
     {
+        if (ClickedUI()) return false;
+
+        if (HasClickedSingleEntity()) return false;
+        //Storing these variables for the selectionBox
+        _startScreenPos = Input.mousePosition;
+        _isSelecting = true;
+        return true;
+    }
+
+    private bool ClickedUI()
+    {
         float mouseX = Input.mousePosition.x;
         float center = (float) Screen.width / 2;
         float leftUi = center - bottomUiWidth / 2;
         float rightUi = center + bottomUiWidth / 2;
         float mouseY = Input.mousePosition.y;
-        if (mouseY < bottomUiHeight && mouseX > leftUi && mouseX < rightUi)
-        {
-            return false;
-        }
-        
+        return mouseY < bottomUiHeight && mouseX > leftUi && mouseX < rightUi;
+    }
+
+    private bool HasClickedSingleEntity()
+    {
         Ray mouseToWorldRay = _camera.ScreenPointToRay(Input.mousePosition);
         //Shoots a ray into the 3D world starting at our mouseposition
         if (Physics.Raycast(mouseToWorldRay, out var hitInfo))
@@ -133,23 +144,20 @@ public class SelectionManager : MonoBehaviour
             Selectable selectable = hitInfo.collider.GetComponentInParent<Selectable>();
             if (selectable)
             {
-                var current = selectable.IsSelected;
+                var wasSelectedBefore = selectable.IsSelected;
                 selectables.ForEach(s => s.IsSelected = false);
                 selectable.IsSelected = true;
-                if (!current)
+                if (!wasSelectedBefore)
                 {
                     NotifySelectionUpdateToUI();
                 }
-                
+
                 //If we clicked on a Selectable, we don’t want to enable our SelectionBox
-                return false;
+                return true;
             }
         }
-        
-        //Storing these variables for the selectionBox
-        _startScreenPos = Input.mousePosition;
-        _isSelecting = true;
-        return true;
+
+        return false;
     }
 
     private void LeftMouseUp()

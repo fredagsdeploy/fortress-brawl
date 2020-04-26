@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Utils;
 
 public class Spawner : MonoBehaviour
 {
     private GameObject _unit;
     private float _spawnRate = 1f;
     private Vector3 _destination;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +22,7 @@ public class Spawner : MonoBehaviour
     
     void Spawn()
     {
-        var spawned = Instantiate(_unit, transform.position + new Vector3(10, 0, 10), transform.rotation);
+        var spawned = Instantiate(_unit, transform.position + new Vector3(10, 0, 10), transform.rotation, DynamicObjectsUtil.DynamicRoot);
         spawned.GetComponent<Movable>().SetDestination(_destination);
     }
 }

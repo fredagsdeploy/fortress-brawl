@@ -27,10 +27,8 @@ namespace Races
         }
 
         public List<ConstructionInfo> constructionInfos;
-        public override string getName()
-        {
-            return "Dwarves";
-        }
+
+        public override string Name => "Dwarves";
 
         public override List<ConstructionInfo> GetConstructionInfos()
         {

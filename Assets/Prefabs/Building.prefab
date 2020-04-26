@@ -93,6 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3922621da6095834c88b72889dc13e03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parent: {fileID: 4086952010138879260, guid: 0e121e231f51bdc4395b70c83cd9f036, type: 3}
   destination: {x: 30, y: 0, z: 50}
   unit: {fileID: 4920679374403368472, guid: 0ecb135c2ca977a4bb675cb42374d2f2, type: 3}
   spawnRate: 5
@@ -125,6 +126,8 @@ MonoBehaviour:
   maxHealth: 500
   mana: 0
   maxMana: 0
+  canConstruct: 0
+  race: {fileID: 0}
 --- !u!1 &7632006619292096897
 GameObject:
   m_ObjectHideFlags: 0
