@@ -45,11 +45,11 @@ public class Selectable : MonoBehaviour
     
     void OnEnable()
     {
-        SelectionManager.selectables.Add(this);
+        UnitManager.selectables.Add(this);
     }
 
     void OnDisable()
     {
-        SelectionManager.selectables.Remove(this);
+        UnitManager.selectables.Remove(this);
     }
 }

@@ -33,7 +33,7 @@ public class ActionButtonsController : MonoBehaviour
     {
         _buildActionActive = true;
         CleanupButtons();
-        _constructionRace.GetConstructionInfos().ForEach(info =>
+        _constructionRace.GetBuildingInfos().ForEach(info =>
         {
             var button = Instantiate(iconButton, transform);
             button.image.sprite = info.sprite;

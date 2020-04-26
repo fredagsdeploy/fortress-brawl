@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 1357585311033625355}
   - component: {fileID: 4108750242033740381}
   m_Layer: 0
-  m_Name: Worker2
+  m_Name: Berserker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -130,6 +130,8 @@ MonoBehaviour:
   maxHealth: 200
   mana: 50
   maxMana: 50
+  race: {fileID: 3911038875807488990, guid: d636efce83cf60b44afadf5851eb85c5, type: 3}
+  sprite: {fileID: 0}
 --- !u!1001 &1657922697839696117
 PrefabInstance:
   m_ObjectHideFlags: 0

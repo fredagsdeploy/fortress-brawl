@@ -13,7 +13,9 @@ public class EntityInfo : MonoBehaviour
     public float mana;
     public float maxMana;
 
-    public bool canConstruct;
-
     public Race race;
+    public Sprite sprite;
+
+    public bool HasMaxHealth => Math.Abs(health - maxHealth) < 0.1f;
+    public bool HasMaxMana => Math.Abs(mana - maxMana) < 0.1f;
 }

@@ -8,6 +8,6 @@ namespace Races
     {
         
         public abstract string Name { get; }
-        public abstract List<ConstructionInfo> GetConstructionInfos();
+        public abstract List<BuildingInfo> GetBuildingInfos();
     }
 }

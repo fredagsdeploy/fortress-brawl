@@ -26,13 +26,13 @@ namespace Races
             }
         }
 
-        public List<ConstructionInfo> constructionInfos;
+        public List<BuildingInfo> buildingInfos;
 
         public override string Name => "Dwarves";
 
-        public override List<ConstructionInfo> GetConstructionInfos()
+        public override List<BuildingInfo> GetBuildingInfos()
         {
-            return constructionInfos;
+            return buildingInfos;
         }
     }
 }

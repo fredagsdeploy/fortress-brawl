@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
 
-public class SelectionManager : MonoBehaviour
+public class UnitManager : MonoBehaviour
 {
     public float bottomUiHeight = 200;
     public float bottomUiWidth = 1200;
@@ -177,6 +177,22 @@ public class SelectionManager : MonoBehaviour
                     selectable.SendMessage(nameof(IMovable.SetDestination), hit.point, SendMessageOptions.DontRequireReceiver);
                 }
             }
+            foreach (var selectable in selectables.Where(selectable => selectable.IsSelected))
+            {
+                var workerManager = selectable.GetComponent<WorkerUnitManager>();
+                if (workerManager)
+                {
+                    workerManager.ClearTasks();
+                    var rightClickedSelectable = hit.collider.GetComponentInParent<Selectable>();
+                    if (rightClickedSelectable)
+                    {
+                        var buildingInfo = rightClickedSelectable.GetComponentInParent<BuildingInfo>();
+                        workerManager.ReplaceQueueWithTask(WorkerUnitTask.Create(buildingInfo));
+                    }
+                }
+            }
+            
+            
         }
     }
 

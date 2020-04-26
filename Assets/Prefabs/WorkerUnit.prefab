@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4842007749394267768}
   - component: {fileID: 6680044427745486970}
   m_Layer: 0
-  m_Name: Worker
+  m_Name: WorkerUnit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,6 +101,7 @@ MonoBehaviour:
   mana: 0
   maxMana: 0
   canConstruct: 0
+  race: {fileID: 0}
 --- !u!136 &3804457552682425761
 CapsuleCollider:
   m_ObjectHideFlags: 0

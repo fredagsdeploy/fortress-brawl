@@ -65,16 +65,18 @@ public class BottomUiController : MonoBehaviour
 
     private void UpdateUnitInfo(Selectable selected)
     {
+        actionButtonsController.ClearSelection();
         unitSelectionText.enabled = true;
         unitPortrait.SetActive(true);
-        var entityInfo = selected.GetComponent<EntityInfo>();
+        var entityInfo = selected.GetComponentInParent<EntityInfo>();
         unitSelectionText.text = entityInfo.entityName;
         _singleSelection = selected.gameObject;
         _singleSelectionCamera = _singleSelection.GetComponentInChildren<Camera>();
         unitHealthBar.SetValue(entityInfo.health, entityInfo.maxHealth);
         unitManaBar.SetValue(entityInfo.mana, entityInfo.maxMana);
 
-        if (entityInfo.canConstruct)
+        var workerUnitManager = _singleSelection.GetComponent<WorkerUnitManager>();
+        if (workerUnitManager)
         {
             actionButtonsController.ConstructionUnitSelected(entityInfo.race);
         }

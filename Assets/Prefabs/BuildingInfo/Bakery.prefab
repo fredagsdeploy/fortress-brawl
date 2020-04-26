@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2577025763944046009}
-  - component: {fileID: 1742511787709078480}
+  - component: {fileID: -4837774921158366610}
   m_Layer: 0
   m_Name: Bakery
   m_TagString: Untagged
@@ -25,13 +25,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 403391179143259308}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 36.06333, y: 0.00000047683716, z: 18.131182}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1742511787709078480
+--- !u!114 &-4837774921158366610
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,11 +40,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 403391179143259308}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bbd5c7b44abede4c9b57678f18f6856, type: 3}
+  m_Script: {fileID: 11500000, guid: 549161781100436b94e0e254421ce8bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghostBuildingPrefab: {fileID: 5552332444187719039, guid: 489baf711bc9e2843b4d8a22013fb74e,
-    type: 3}
-  buildingPrefab: {fileID: 7156225392820891753, guid: 0e26a1911c72cd248bc53155119f8f17,
-    type: 3}
+  entityName: Bakery
+  health: 0
+  maxHealth: 100
+  mana: 0
+  maxMana: 0
+  race: {fileID: 3911038875807488990, guid: d636efce83cf60b44afadf5851eb85c5, type: 3}
   sprite: {fileID: 21300000, guid: 86cd7b0bd14622c44bc5898ca5689c02, type: 3}
+  ghostPrefab: {fileID: 5552332444187719039, guid: 489baf711bc9e2843b4d8a22013fb74e,
+    type: 3}
+  constructionPrefab: {fileID: 3612770945927606519, guid: 381a16ab53defc34f824e4b8ed1b9ea2,
+    type: 3}
+  completedPrefab: {fileID: 7156225392820891753, guid: 0e26a1911c72cd248bc53155119f8f17,
+    type: 3}
+  buildTimeInSeconds: 30

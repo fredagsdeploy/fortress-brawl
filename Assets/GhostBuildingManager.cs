@@ -14,7 +14,11 @@ public class GhostBuildingManager : MonoBehaviour
     void Start()
     {
         _outline = GetComponentInChildren<Outline>();
-        _outline.color = 2;
+        if (_outline)
+        {
+            _outline.color = 2;  
+        }
+        
     }
 
     private void OnTriggerEnter(Collider other)

@@ -1,16 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.UIElements;
+using Utils;
 
 namespace UI
 {
     public class ConstructionManager : MonoBehaviour
     {
         private bool _isPlacing = false;
-        private ConstructionInfo _constructionInfo;
+        private BuildingInfo _buildingInfo;
 
-        private GameObject _ghostBuilding;
         private GhostBuildingManager _ghostBuildingManager;
-        private MeshRenderer _ghostBuildingRenderer;
+        public WorkerUnitManager workerUnitManager;
 
         private Camera _camera;
 
@@ -39,23 +39,23 @@ namespace UI
             }
         }
 
-        public void StartPlacing(ConstructionInfo constructionInfo)
+        public void StartPlacing(BuildingInfo buildingInfo)
         {
-            Debug.Log("Starting placing " + constructionInfo.ghostBuildingPrefab.name);
-            _constructionInfo = constructionInfo;
+            Debug.Log("Starting placing " + buildingInfo.ghostPrefab.name);
+            _buildingInfo = Instantiate(buildingInfo, DynamicObjectsUtil.DynamicRoot);
             _isPlacing = true;
-            _ghostBuilding = Instantiate(_constructionInfo.ghostBuildingPrefab, transform, true);
-            _ghostBuildingRenderer = _ghostBuilding.GetComponentInChildren<MeshRenderer>();
-            _ghostBuildingRenderer.material.color = new Color(1f, 1f, 1f, 0.5f);
-            _ghostBuildingManager = _ghostBuilding.GetComponentInChildren<GhostBuildingManager>();
+            
+            _buildingInfo.State = BuildingInfo.BuildingState.Ghost;
+            _ghostBuildingManager = _buildingInfo.GetComponentInChildren<GhostBuildingManager>();
         }
 
-        public void StopPlacing()
+        public void StopPlacing(bool shouldDestroyGhost = true)
         {
             _isPlacing = false;
-            _ghostBuildingRenderer = null;
-            _constructionInfo = null;
-            Destroy(_ghostBuilding);
+            if (shouldDestroyGhost)
+            {
+                Destroy(_buildingInfo);    
+            }
         }
 
         private void PlaceBuilding()
@@ -64,9 +64,9 @@ namespace UI
             {
                 return;
             }
-
-            Instantiate(_constructionInfo.buildingPrefab, _ghostBuilding.transform.position, _ghostBuilding.transform.rotation);
-            StopPlacing();
+            
+            workerUnitManager.AddTask(WorkerUnitTask.Create(_buildingInfo));
+            StopPlacing(false);
         }
 
         private void UpdateGhost()
@@ -77,7 +77,7 @@ namespace UI
             {
                 if (hitInfo.collider.CompareTag("Ground"))
                 {
-                    _ghostBuilding.transform.position = hitInfo.point;
+                    _buildingInfo.transform.position = hitInfo.point;
                 }
             }
         }

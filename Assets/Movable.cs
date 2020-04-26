@@ -66,6 +66,12 @@ public class Movable : MonoBehaviour, ISelectable, IMovable
     {
         _clonedGoalPost.transform.position = new Vector3(destination.x, _clonedGoalPost.transform.position.y, destination.z);
         _agent.destination = destination;
+        _agent.isStopped = false;
+    }
+
+    public void Stop()
+    {
+        _agent.isStopped = true;
     }
 
     public void SelectionChanged(bool value)
