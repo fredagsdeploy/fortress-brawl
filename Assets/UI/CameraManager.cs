@@ -14,7 +14,7 @@ public class CameraManager : MonoBehaviour
     private float _maxHeight = 100f;
     private bool _cursorLocked = false;
     private Camera _camera;
-    private float _panDetect = 15f;
+    private float _panDetect = 0; //15f;
 
     // Start is called before the first frame update
     void Start()

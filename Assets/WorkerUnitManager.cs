@@ -13,10 +13,13 @@ public class WorkerUnitManager : MonoBehaviour
     private float _workingRange = 10f;
     private bool _inRange = false;
     private IMovable _movable;
+    private Animator _animator;
+    private static readonly int Working = Animator.StringToHash("working");
 
     void Start()
     {
         _movable = GetComponentInChildren<IMovable>();
+        _animator = GetComponentInChildren<Animator>();
     }
 
     public void AddTask(WorkerUnitTask task)
@@ -59,6 +62,7 @@ public class WorkerUnitManager : MonoBehaviour
     {
         if (_currentTask != null && _currentTask.IsComplete())
         {
+            _animator.SetBool(Working, false);
             _currentTask = null;
         }
 
@@ -88,6 +92,7 @@ public class WorkerUnitManager : MonoBehaviour
         if (_currentTask.target == null)
         {
             _movable.Stop();
+            _animator.SetBool(Working, false);
             _currentTask = null;
             return;
         }
@@ -107,11 +112,11 @@ public class WorkerUnitManager : MonoBehaviour
 
     private void PerformRepair()
     {
-        if (_inRange)
-        {
-            var repairRate = 0.10f;
-            _currentTask.target.Progress += repairRate * Time.deltaTime;   
-        }
+        if (!_inRange) return;
+        
+        _animator.SetBool(Working, true);
+        var repairRate = 0.10f;
+        _currentTask.target.Progress += repairRate * Time.deltaTime;
     }
 
     private void PerformBuild()
@@ -121,6 +126,7 @@ public class WorkerUnitManager : MonoBehaviour
             return;
         }
 
+        _animator.SetBool(Working, true);
         if (_currentTask.target.State == BuildingInfo.BuildingState.Ghost)
         {
             _currentTask.target.State = BuildingInfo.BuildingState.Construction;
