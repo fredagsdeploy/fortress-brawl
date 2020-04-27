@@ -21,7 +21,7 @@ public class Selectable : MonoBehaviour
                 {
                     _outline.enabled = value;
                 }
-                SendMessage(nameof(ISelectable.SelectionChanged), value, SendMessageOptions.DontRequireReceiver);
+                SendMessage(nameof(ISelectionListener.SelectionChanged), value, SendMessageOptions.DontRequireReceiver);
             }
 
         }

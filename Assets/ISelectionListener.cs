@@ -1,4 +1,4 @@
-﻿public interface ISelectable
+﻿public interface ISelectionListener
 {
     void SelectionChanged(bool value);
 }

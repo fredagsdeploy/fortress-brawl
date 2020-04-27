@@ -5,7 +5,7 @@ using Utils;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Animator))]
-public class Movable : MonoBehaviour, ISelectable, IMovable
+public class Movable : MonoBehaviour, ISelectionListener, IMovable
 {
     private NavMeshAgent _agent;
     private Animator _animator;
@@ -77,5 +77,10 @@ public class Movable : MonoBehaviour, ISelectable, IMovable
     public void SelectionChanged(bool value)
     {
         _selected = value;
+    }
+
+    public bool IsMoving()
+    {
+        return _moving;
     }
 }

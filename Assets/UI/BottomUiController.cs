@@ -21,11 +21,17 @@ public class BottomUiController : MonoBehaviour
 
     [CanBeNull] private Camera _singleSelectionCamera;
     [CanBeNull] private GameObject _singleSelection;
+    [CanBeNull] private EntityInfo _selectionEntityInfo;
     
 
     private void Awake()
     {
         unitSelectionText.enabled = false;
+    }
+
+    private void Update()
+    {
+        UpdateDynamicUnitInfo();
     }
 
     public void OnUpdatedSelection(List<Selectable> selected)
@@ -68,17 +74,16 @@ public class BottomUiController : MonoBehaviour
         actionButtonsController.ClearSelection();
         unitSelectionText.enabled = true;
         unitPortrait.SetActive(true);
-        var entityInfo = selected.GetComponentInParent<EntityInfo>();
-        unitSelectionText.text = entityInfo.entityName;
+        _selectionEntityInfo = selected.GetComponentInParent<EntityInfo>();
+        unitSelectionText.text = _selectionEntityInfo.entityName;
         _singleSelection = selected.gameObject;
         _singleSelectionCamera = _singleSelection.GetComponentInChildren<Camera>();
-        unitHealthBar.SetValue(entityInfo.health, entityInfo.maxHealth);
-        unitManaBar.SetValue(entityInfo.mana, entityInfo.maxMana);
+        UpdateDynamicUnitInfo();
 
         var workerUnitManager = _singleSelection.GetComponent<WorkerUnitManager>();
         if (workerUnitManager)
         {
-            actionButtonsController.ConstructionUnitSelected(entityInfo.race);
+            actionButtonsController.ConstructionUnitSelected(_selectionEntityInfo.race);
         }
         
         if (_singleSelectionCamera)
@@ -87,6 +92,14 @@ public class BottomUiController : MonoBehaviour
         }
     }
 
+    private void UpdateDynamicUnitInfo()
+    {
+        if (!_selectionEntityInfo) return;
+        
+        unitHealthBar.SetValue(_selectionEntityInfo.health, _selectionEntityInfo.maxHealth);
+        unitManaBar.SetValue(_selectionEntityInfo.mana, _selectionEntityInfo.maxMana);
+
+    }
 
 
     public void PortraitClicked()
