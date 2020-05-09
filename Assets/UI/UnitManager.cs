@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Code;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
 
-public class UnitManager : MonoBehaviour
+public class UnitManager : MonoBehaviourPunCallbacks
 {
     public float bottomUiHeight = 200;
     public float bottomUiWidth = 1200;
@@ -47,6 +49,11 @@ public class UnitManager : MonoBehaviour
 
     private void Update()
     {
+        if (!photonView.IsMine && PhotonNetwork.IsConnected)
+        {
+            return;
+        }
+        
         var shouldUpdateSelectionBox = true;
         if (Input.GetMouseButtonDown((int) MouseButton.LeftMouse))
         {

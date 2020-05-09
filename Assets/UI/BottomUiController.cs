@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Code;
 using JetBrains.Annotations;
 using Races;
 using UI;
@@ -9,6 +10,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.UI;
 using Button = UnityEngine.UI.Button;
+using Selectable = Code.Selectable;
 
 public class BottomUiController : MonoBehaviour
 {
