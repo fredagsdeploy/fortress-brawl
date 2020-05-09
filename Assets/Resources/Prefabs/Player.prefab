@@ -80,7 +80,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2861c7ca0b30c4d4dbb23a9223b8db62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  workerUnitManager: {fileID: 0}
+  workerUnitManager: {fileID: 1915871462, guid: aef1165b14b88fe4fb171f22ceb9909e,
+    type: 3}
 --- !u!114 &4535055627632179639
 MonoBehaviour:
   m_ObjectHideFlags: 0

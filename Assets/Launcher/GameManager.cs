@@ -21,7 +21,10 @@ namespace dev.fredag.fortressbrawl.launcher
             Instance = this;
             
             Debug.LogFormat("We are Instantiating LocalPlayer from {0}", Application.loadedLevelName);
-            PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0,0,0), Quaternion.identity, 0);
+            if (PhotonNetwork.IsConnected)
+            {
+                PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0,0,0), Quaternion.identity, 0);
+            } 
         }
 
 

@@ -10,6 +10,7 @@ namespace Code
 {
     public class WorkerUnitManager : MonoBehaviour
     {
+        public bool derp = false;
         private Queue<WorkerUnitTask> _tasks = new Queue<WorkerUnitTask>();
         [CanBeNull] private WorkerUnitTask _currentTask;
         private float _workingRange = 10f;
@@ -26,7 +27,10 @@ namespace Code
 
         public void AddTask(WorkerUnitTask task)
         {
+            Debug.Log("Adding task " + task);
             _tasks.Enqueue(task);
+            Debug.Log($"Task added {GetInstanceID()} {task} {_tasks.Count}");
+            derp = true;
         }
 
         public void ReplaceQueueWithTask(WorkerUnitTask task)
@@ -62,14 +66,17 @@ namespace Code
 
         void Update()
         {
+            Debug.Log($"Tasks count {GetInstanceID()} {_tasks.Count}");
             if (_currentTask != null && _currentTask.IsComplete())
             {
+                Debug.Log("Task done");
                 _animator.SetBool(Working, false);
                 _currentTask = null;
             }
 
             if (_currentTask == null && _tasks.Any())
             {
+                Debug.Log("Start new task");
                 StartNextTask();
             }
 
@@ -91,14 +98,17 @@ namespace Code
                 return;
             }
 
+            Debug.Log("PerformWork");
             if (_currentTask.target == null)
             {
                 _movable.Stop();
                 _animator.SetBool(Working, false);
                 _currentTask = null;
+                Debug.Log("PerformWork Target is null");
                 return;
             }
 
+            Debug.Log("PerformWork working");
             switch (_currentTask.taskType)
             {
                 case WorkerUnitTask.TaskType.Construct:
@@ -214,6 +224,11 @@ namespace Code
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        public override string ToString()
+        {
+            return $"{nameof(target)}: {target}, {nameof(taskType)}: {taskType}";
         }
     }
 }
