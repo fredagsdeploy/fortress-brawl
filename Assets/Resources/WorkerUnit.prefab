@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 1915871463}
   - component: {fileID: 1915871461}
   - component: {fileID: 1915871462}
+  - component: {fileID: -2847400829747957640}
   m_Layer: 0
   m_Name: WorkerUnit
   m_TagString: Untagged
@@ -123,10 +124,10 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 0
+  Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 0}
+  - {fileID: 4376813789719920651}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -186,6 +187,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 405541cc170638a45ae0945edb29001a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &-2847400829747957640
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 572891746838371021}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!136 &3804457552682425761
 CapsuleCollider:
   m_ObjectHideFlags: 0

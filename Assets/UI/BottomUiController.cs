@@ -83,6 +83,7 @@ public class BottomUiController : MonoBehaviour
         UpdateDynamicUnitInfo();
 
         var workerUnitManager = _singleSelection.GetComponent<WorkerUnitManager>();
+        Debug.Log($"Selected {selected}");
         if (workerUnitManager)
         {
             actionButtonsController.ConstructionUnitSelected(_selectionEntityInfo.race);

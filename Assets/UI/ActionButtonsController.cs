@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Races;
 using UI;
@@ -11,10 +12,15 @@ public class ActionButtonsController : MonoBehaviour
     public Button iconButton;
     public Sprite cancelSprite;
     public Sprite buildSprite;
-    public ConstructionManager constructionManager;
+    private ConstructionManager _constructionManager;
     private List<Button> _buttons = new List<Button>();
     private Race _constructionRace;
     private bool _buildActionActive = false;
+
+    void Start()
+    { 
+        _constructionManager = ConstructionManager.Instance;
+    }
 
     void Update()
     {
@@ -37,7 +43,7 @@ public class ActionButtonsController : MonoBehaviour
         {
             var button = Instantiate(iconButton, transform);
             button.image.sprite = info.sprite;
-            button.onClick.AddListener((() => constructionManager.StartPlacing(info)));
+            button.onClick.AddListener((() => _constructionManager.StartPlacing(info)));
             _buttons.Add(button);
         });
         var cancelButton = Instantiate(iconButton, transform);

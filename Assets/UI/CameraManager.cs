@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Cursor = UnityEngine.Cursor;
 
-public class CameraManager : MonoBehaviour
+public class CameraManager : MonoBehaviourPunCallbacks
 {
     public float horizontalPanSpeed = 100f;
     public float verticalPanSpeed = 100f;

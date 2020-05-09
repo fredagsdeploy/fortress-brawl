@@ -10,7 +10,6 @@ namespace Code
 {
     public class WorkerUnitManager : MonoBehaviour
     {
-        public bool derp = false;
         private Queue<WorkerUnitTask> _tasks = new Queue<WorkerUnitTask>();
         [CanBeNull] private WorkerUnitTask _currentTask;
         private float _workingRange = 10f;
@@ -27,10 +26,8 @@ namespace Code
 
         public void AddTask(WorkerUnitTask task)
         {
-            Debug.Log("Adding task " + task);
             _tasks.Enqueue(task);
             Debug.Log($"Task added {GetInstanceID()} {task} {_tasks.Count}");
-            derp = true;
         }
 
         public void ReplaceQueueWithTask(WorkerUnitTask task)
@@ -66,7 +63,6 @@ namespace Code
 
         void Update()
         {
-            Debug.Log($"Tasks count {GetInstanceID()} {_tasks.Count}");
             if (_currentTask != null && _currentTask.IsComplete())
             {
                 Debug.Log("Task done");
@@ -98,7 +94,6 @@ namespace Code
                 return;
             }
 
-            Debug.Log("PerformWork");
             if (_currentTask.target == null)
             {
                 _movable.Stop();
@@ -108,7 +103,6 @@ namespace Code
                 return;
             }
 
-            Debug.Log("PerformWork working");
             switch (_currentTask.taskType)
             {
                 case WorkerUnitTask.TaskType.Construct:

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections;
+using Code;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 using Photon.Pun;
 using Photon.Realtime;
+using UI;
 
 
 namespace dev.fredag.fortressbrawl.launcher
@@ -19,14 +21,21 @@ namespace dev.fredag.fortressbrawl.launcher
         private void Start()
         {
             Instance = this;
+            GameObject player; 
             
             Debug.LogFormat("We are Instantiating LocalPlayer from {0}", Application.loadedLevelName);
             if (PhotonNetwork.IsConnected)
             {
-                PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0,0,0), Quaternion.identity, 0);
-            } 
-        }
+                player = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0,0,0), Quaternion.identity, 0);
+            }
+            else
+            {
+                player = Instantiate(playerPrefab);
+            }
 
+            ConstructionManager.Instance.workerUnitManager = player.GetComponentInChildren<WorkerUnitManager>();
+        }
+        
 
         public override void OnLeftRoom()
         {

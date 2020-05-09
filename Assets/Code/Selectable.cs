@@ -1,9 +1,10 @@
 ﻿using cakeslice;
+using Photon.Pun;
 using UnityEngine;
 
 namespace Code
 {
-    public class Selectable : MonoBehaviour
+    public class Selectable : MonoBehaviourPunCallbacks
     {
         private Outline _outline;
         private bool _isSelected = false;
@@ -23,6 +24,18 @@ namespace Code
                     SendMessage(nameof(ISelectionListener.SelectionChanged), value, SendMessageOptions.DontRequireReceiver);
                 }
 
+            }
+        }
+
+        public bool IsMine {
+            get
+            {
+                if (photonView != null)
+                {
+                    return photonView.IsMine;
+                }
+
+                return true;
             }
         }
 

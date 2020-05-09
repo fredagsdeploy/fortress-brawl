@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
 
-public class UnitManager : MonoBehaviourPunCallbacks
+public class UnitManager : MonoBehaviour
 {
     public float bottomUiHeight = 200;
     public float bottomUiWidth = 1200;
@@ -49,11 +49,6 @@ public class UnitManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if (!photonView.IsMine && PhotonNetwork.IsConnected)
-        {
-            return;
-        }
-        
         var shouldUpdateSelectionBox = true;
         if (Input.GetMouseButtonDown((int) MouseButton.LeftMouse))
         {
@@ -98,7 +93,7 @@ public class UnitManager : MonoBehaviourPunCallbacks
 
             //Looping through all the selectables in our world (automatically added/removed through the Selectable OnEnable/OnDisable)
             bool changed = false;
-            foreach (Selectable selectable in selectables)
+            foreach (Selectable selectable in selectables.Where(s => s.IsMine))
             {
                 //If the screenPosition of the worldobject is within our selection bounds, we can add it to our selection
                 Vector3 screenPos = _camera.WorldToScreenPoint(selectable.transform.position);
@@ -194,7 +189,11 @@ public class UnitManager : MonoBehaviourPunCallbacks
                     if (rightClickedSelectable)
                     {
                         var buildingInfo = rightClickedSelectable.GetComponentInParent<BuildingInfo>();
-                        workerManager.ReplaceQueueWithTask(WorkerUnitTask.Create(buildingInfo));
+                        if (buildingInfo)
+                        { 
+                            workerManager.ReplaceQueueWithTask(WorkerUnitTask.Create(buildingInfo)); 
+                        }
+                        
                     }
                 }
             }
